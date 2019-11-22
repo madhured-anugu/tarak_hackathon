@@ -8,6 +8,17 @@
             "password": "welcome"
         },
         "userId": 1583019291784,
-        "status": "Busy"
+        "status": "Online"
+    },
+    "1593807972352": {
+        "firstName": "admin",
+        "lastName": "check",
+        "isAdmin": true,
+        "login": {
+            "username": "admin",
+            "password": "welcome"
+        },
+        "userId": 1593807972352,
+        "status": "Online"
     }
 }

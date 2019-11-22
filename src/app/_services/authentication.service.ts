@@ -42,7 +42,7 @@ export class AuthenticationService {
     }
 
     getAll(user) {
-        return this.http.post<any>(`/api/account/login`, {userId: user.userId})
+        return this.http.post<any>(`/api/account/getAll`, {userId: user.userId})
         .pipe(map(users => {
             return users;
         }));

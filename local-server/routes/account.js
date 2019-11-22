@@ -8,7 +8,7 @@ const nodeJsondbOptions = require('node-json-db/dist/lib/JsonDBConfig');
 const dbConfig = nodeJsondbOptions.Config;
 const _ = require('lodash');
 const dbPath = path.join(__dirname, "..", "db", "account");
-
+const connection = require('../socket');
 var db = new JsonDB(new dbConfig(dbPath, true, true, '/'));
 
 router.post("/login", login);
@@ -58,6 +58,7 @@ function setStatus (req, res, next) {
         //if online websocket 
         // online (native)
 
+        connection.sendMessage('userStatus' , {userId: account.userId, status: status});
         db.push('/'+userId, account);
         res.json({isSaved: true});
     }else{

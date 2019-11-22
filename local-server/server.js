@@ -8,14 +8,16 @@ const url = require('url');
 const _ = require('lodash');
 const portfinder = require('portfinder');
 const cors = require('cors');
-
+const http = require("http");
+const socketio = require("socket.io");
 const accountRouter = require('./routes/account');
-
+const connection = require('./socket');
 const console = require('./lib/consoleColors');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const morgan = require('morgan');
-let app, server;
+let app, 
+   server;
 
 //app.use(express.static(staticFileServerPath));
 let port = process.env.PORT || 8500;
@@ -32,13 +34,29 @@ const onPortCB = (err, portNo) => {
 };
 
 portfinder.getPort(onPortCB);
+function onNewWebsocketConnection(socket){
+  console.info(`Socket ${socket.id} has connected.`);
+  connection.onlineClients.add(socket.id);
 
+  socket.on("disconnect", () => {
+     connection.onlineClients.delete(socket.id);
+      console.info(`Socket ${socket.id} has disconnected.`);
+  });
+
+
+}
 function setupApp(port) {
   app = express();
-  server = app.listen(port, function() {
-    console.cyanBold('Log Parser Listening on ' + port);
-    onServerBind();
-  });
+  server = http.createServer(app);
+  const io = socketio(server);
+  connection.socket = io;
+  io.on("connection", onNewWebsocketConnection);
+  server.listen(port,'0.0.0.0');
+  // server = app.listen(port, function() {
+  //   console.cyanBold('Log Parser Listening on ' + port);
+    
+  // });
+  onServerBind();
 
   server.on('error', function(err) {
     console.redBold(' Error while trying to setup LogParser  ');

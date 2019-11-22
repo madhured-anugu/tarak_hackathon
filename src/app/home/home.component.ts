@@ -1,5 +1,5 @@
 import { AuthenticationService } from './../_services/authentication.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { first } from 'rxjs/operators';
 
 import io from 'socket.io-client';
@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
     users: any[] = [];
     selectedStatus;
 
-    constructor(private authService: AuthenticationService) {
+    constructor(private authService: AuthenticationService, private _ngZone: NgZone) {
         const payload = JSON.parse(localStorage.getItem('currentUser')) || {};
         this.currentUser = payload.account;
         
@@ -27,11 +27,14 @@ export class HomeComponent implements OnInit {
                 console.log('Socket Connected');
             });
             socket.on('userStatus', (account)=> {
-                this.users.forEach((user)=> {
-                    if(user.userId === account.userId){
-                        user.status = account.status;
-                    }
+                this._ngZone.run(() => {
+                    this.users.forEach((user)=> {
+                        if(user.userId === account.userId){
+                            user.status = account.status;
+                        }
+                    });
                 });
+              
             });
         this.loadAllUsers();
         }

@@ -1,0 +1,27 @@
+{
+  "name": "evergy-api",
+  "version": "1.0.0",
+  "description": "Evergy API",
+  "main": "server",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "colors": "^1.4.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-http-proxy": "^1.6.0",
+    "node-json-db": "^1.0.2",
+    "lodash": "^4.17.15",
+    "morgan": "^1.9.1",
+    "portfinder": "^1.0.25",
+    "request": "^2.88.0",
+    "url": "^0.11.0",
+    "xml2json": "^0.11.2"
+  }
+}

@@ -56,7 +56,7 @@
     "portfinder": "^1.0.25",
     "protractor": "~5.4.0",
     "request": "^2.88.0",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3",
